@@ -1,9 +1,6 @@
----
-title: "Demo of the [`{quadrangle}`](https://www.github.com/brianwdavis/quadrangle) package"
-output: github_document
----
+This is a demo of the [`{quadrangle}`](https://www.github.com/brianwdavis/quadrangle) package.
 
-# Files:
+## Files:
 See [demo.R](inst/demo.R) (at the console) and [app.R](inst/app.R) (Shiny).
 
 ## Notes:
