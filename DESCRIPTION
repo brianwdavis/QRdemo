@@ -1,0 +1,19 @@
+Package: QRdemo
+Type: Package
+Title: Demonstrates Using {quadrangle} for Metadata
+Version: 0.1.0
+Authors@R: person("Brian", "Davis", email = "brianwdavis@gmail.com", role = c("aut", "cre"))
+Maintainer: Brian W. Davis <brianwdavis@gmail.com>
+Description: This is a companion for doing live demos of the {quadrangle} package.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Depends: 
+    quadrangle,
+    dplyr,
+    googledrive,
+    googlesheets
+Imports:
+    glue,
+    stringr,
+    tidyr
