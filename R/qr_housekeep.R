@@ -11,12 +11,24 @@
 
 
 qr_sheet_init <- function(folder_id) {
-  sheet_id <- gs_new(
-    title = "QR Demo DB",
-    ws_title = "Reads",
-    row_extent = 10,
-    col_extent = 5
+  sheet_id <-
+    gs_new(
+      title = "QR Demo DB",
+      ws_title = "Reads",
+      row_extent = 10,
+      col_extent = 5
+    ) %>%
+    qr_sheet_reset()
+
+  drive_mv(
+    as_dribble(as_id(sheet_id$sheet_key)),
+    path = as_dribble(as_id(folder_id))
     )
+
+  return(sheet_id)
+}
+
+qr_sheet_reset <- function(sheet_id) {
 
   heading <- tibble(
     Filename = "(on Drive)",
@@ -31,24 +43,8 @@ qr_sheet_init <- function(folder_id) {
     "Reads",
     input = heading,
     col_names = T,
-    byrow = T
-    )
-
-  drive_mv(
-    as_dribble(as_id(sheet_id$sheet_key)),
-    path = as_dribble(as_id(folder_id))
-    )
-
-  return(sheet_id)
-}
-
-qr_sheet_reset <- function(sheetid) {
-  gs_edit_cells(
-    sheet_id,
-    "Reads",
-    input = matrix("", ncol = 5, nrow = 4),
-    anchor = "A3",
-    byrow = T
+    byrow = T,
+    trim = T
   )
 }
 

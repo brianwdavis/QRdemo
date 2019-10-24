@@ -1,8 +1,5 @@
 qr_process <- function(drive_id, sheet_id) {
 
-  message(Sys.time())
-  message("Reading image id: ", drive_id)
-
   fn <- paste0(drive_id, ".jpg")
   #name, local_path, id, drive_resource
   meta_drive <- drive_download(
@@ -31,29 +28,28 @@ qr_process <- function(drive_id, sheet_id) {
     meta_qr <- meta_qr %>% add_row(id = 0)
 
     new_row <- bind_cols(meta_file, meta_qr) %>%
-      mutate_at(vars(-image_taken), ~tidyr::replace_na(., ""))
+      mutate_all(~stringr::str_replace_na(., ""))
 
-    message("\nThere was a read error, appending partial row to DB.")
+    message(crayon::style("\nThere was a read error, appending partial row to DB.", "yellow1"))
 
   } else {
 
     site <- stringr::str_extract(meta_qr$value, "[A-Z]{3}")
-    message(glue::glue("\nSuccessful read of image from site: {site}"))
+    message(crayon::style(glue::glue("\n\nSuccessful read of image from site: {site}."), "green1"))
 
     new_row <- bind_cols(meta_file, meta_qr)
 
   }
 
-  print(new_row, width = Inf)
   # filename, file link, time taken, id, value
   gs_add_row(
     sheet_id,
     ws = "Reads",
     input = new_row
   )
-  message("Removing temp file...")
-  file.remove(fn)
 
+  invisible(file.remove(fn))
+  print(new_row, width = Inf)
 }
 
 

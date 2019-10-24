@@ -16,4 +16,4 @@ Depends:
 Imports:
     glue,
     stringr,
-    tidyr
+    crayon
